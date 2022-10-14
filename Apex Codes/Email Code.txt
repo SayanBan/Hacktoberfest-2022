@@ -1,0 +1,94 @@
+ public static void welcomeEmail(Set<Id> accID){
+        List<Account> accList = [SELECT Id, Name, Email FROM Account WHERE Id IN :accID];
+        List<Messaging.SingleEmailMessage> msgList = new List<Messaging.SingleEmailMessage>(); 
+        
+        for(Account acc: accList){    
+            Messaging.SingleEmailMessage Email = new Messaging.SingleEmailMessage();
+            List<String> toAddress = new List<String>();
+		toAddress.add(acc.Email);   
+            List<String> ccAddress = new List<String>();
+            ccAddress.add('poonam.28gnm@gmail.com');
+            
+            email.setToAddresses(toAddress);
+            email.setCcAddresses(ccAddress);
+		
+		List<Account> accountAttach = [SELECT Id, (SELECT Id FROM Attachments) FROM Account WHERE Id = :accID];
+    		if (!accountAttach.isEmpty()) {
+      		Set<Id> attachmentIds = (new Map<Id, SObject>(accountAttach[0])).keySet();
+      		List<Attachment> files = [SELECT Name, Body, ContentType FROM Attachment WHERE Id IN :attachmentIds];
+    		}
+
+		List<Messaging.EmailFileAttachment> attachments = new List<Messaging.EmailFileAttachment>();
+    		for (Attachment file: files) {
+      		Messaging.EmailFileAttachment efa = new Messaging.EmailFileAttachment();
+      		efa.setFileName(file.Name);
+      		efa.setBody(file.Body);
+      		efa.setContentType(file.ContentType);
+      		attachments.add(efa);
+    		}
+    		email.setFileAttachments(attachments);
+            email.setTemplateId('2F00X5j0000012KOy');
+            email.setTargetObjectId(acc.Id);
+            email.setSaveAsActivity(true);  
+            msgList.add(Email);
+            Messaging.SendEmailResult[] result = Messaging.sendEmail(msgList);
+            if(result[0].success){
+                System.debug('The email was sent successfully.');
+            }else{
+                System.debug('The Email failed to send:'+result[0].errors[0].message);
+            }
+        }
+        
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@isTest
+    public static void generatePDFTest(){
+        Job__c j = new Job__c(Move_In_Date__c = System.today(),Discount__c=10,Total_Payable_Amount__c='100',TotalAfterDiscount__c='90',Quickbook_Invoice_Number__c='102',Total_Price__c=90);
+        insert j;
+        Test.startTest();
+        jobInvoicesHandler.generatePDF(j.Id);
+        Test.stopTest();
+        System.assertEquals('','');
+
+    }
+    
+    @isTest
+    public static void fetchTermsTest(){
+        test.startTest();
+        jobInvoicesHandler.fetchTerms();
+        test.stopTest();
+    }
+    
+    @isTest
+    public static void handleDueDateTest(){
+        test.startTest();
+    	jobInvoicesHandler.handleDueDate('2/10 EOM');
+        test.stopTest();
+    }
+    
+    @isTest
+    public static void sendEmailToPropertyManagerTest(){
+/*        
+        try{
+            jobInvoicesHandler.sendEmailToPropertyManager('00P8M000000vytOUAQ', 'poonam.28gnm@gmail.com');
+        }catch(Exception ex){
+            System.debug('Exception===>' +ex.getMessage());
+        }
+*/
+        test.startTest();
+        jobInvoicesHandler.sendEmailToPropertyManager('a198M000000CeMeQAK', 'poonam.28gnm@gmail.com');
+        test.stopTest();       
+    }
