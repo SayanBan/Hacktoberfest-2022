@@ -1,0 +1,16 @@
+<template>
+    <lightning-card title="Create Account">
+        {recordId}
+        <lightning-input label="Account Name" onchange={accountChange} name="name" value={accountObj.Name}></lightning-input>
+        <lightning-input label="Account Phone" onchange={accountChange} name="phone" value={accountObj.Phone}></lightning-input>
+        <lightning-input label="Account Rating" onchange={accountChange} name="rating" value={accountObj.Rating}></lightning-input>
+
+        <div class="footer">
+            <lightning-button label="Save Account" onclick={saveAccount}></lightning-button>
+            <lightning-button label="New Account" onclick={navigateToNewAccountPage}></lightning-button>
+            <lightning-button label="View Account" onclick={navigateToViewAccountPage}></lightning-button>
+            <lightning-button label="Demo Training" onclick={navigateToDemoTraining}></lightning-button>
+        </div>
+    </lightning-card>
+    
+</template>

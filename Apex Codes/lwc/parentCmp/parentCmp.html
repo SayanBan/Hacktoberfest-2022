@@ -1,0 +1,13 @@
+<template>
+    <lightning-card title="Parent Component">
+        {fromChild}
+    <lightning-button label="Child Cmp" onclick={showChildCmp}></lightning-button>
+</lightning-card>
+    <template if:true={visible}>
+    <c-child-cmp  msg={message} onprocessvalue={getValue}></c-child-cmp>
+    </template>
+
+    
+</template>
+
+
