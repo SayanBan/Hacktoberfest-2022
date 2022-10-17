@@ -1,0 +1,64 @@
+<template>
+    <lightning-card title="Training LWC">
+       
+        <lightning-input  label="Principle"  name="principle"  onchange={handleChange} value={principle}></lightning-input>
+        <lightning-input  label="Rate"  name="rate"  onchange={handleChange} value={rate}></lightning-input>
+        <lightning-input  label="Time"  name="time"  onchange={handleChange} value={time}></lightning-input>
+        <lightning-input label="Checkbox" type="checkbox"></lightning-input>
+        <div if:true={showinterest}>
+        Simple Interest is:{interest}
+        </div>
+
+        <div class="footer">
+        <lightning-button-group>
+        <lightning-button label="Calculate SI"  onclick={calculateSi}></lightning-button>
+        <lightning-button label="Show Contact" onclick={showcontact}></lightning-button>
+        </lightning-button-group>
+
+
+        </div>
+
+
+        <template if:true={contactVisible}>
+            <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <template for:each={contactList} for:item="item" for:index="index">
+                        <tr key={item.id}>
+                            <td>{item.Name}</td>
+                            <td>{item.Email}</td>
+                            <td>{item.Phone}</td>
+                        </tr>
+                    </template>
+                </tbody>
+            </table>
+
+        </template>
+
+
+
+
+
+
+
+
+
+
+
+
+
+        <!-- <lightning-combobox
+        options={options}
+        label="ComboBox"
+        value={handlevalue}
+        onchange={combobox}></lightning-combobox> -->
+       
+    </lightning-card>
+    
+</template>

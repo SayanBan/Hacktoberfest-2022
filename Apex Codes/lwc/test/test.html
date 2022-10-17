@@ -1,0 +1,82 @@
+<template>
+    <lightning-card>
+        <template if:true={spinner}>
+            <lightning-spinner  alternative-text="Loading..."> </lightning-spinner>
+        <!--     <lightning-spinner alternative-text="Loading..."> </lightning-spinner> -->
+        </template>
+        {variable}
+        <div class="slds-grid slds-gutters">
+            <div class="slds-col slds-size_1-of-3">
+            <h1 class="slds-text-heading_large">SLDS Example</h1>
+            </div>
+            <div class="slds-col slds-size_2-of-3">
+                <h1 class="slds-text-heading_large">SLDS Example</h1>
+                </div>
+               
+            </div>
+            <div class="slds-p-top_medium">
+                <p>Hello!</p>
+            </div>
+       <lightning-input label="Principle" value ={principle} onchange={handleChange} name="principle"></lightning-input>
+       <lightning-input label="Rate" value ={rate} onchange={handleChange} name="rate"></lightning-input>
+       <lightning-input label="Time" value ={time} onchange={handleChange} name="time"></lightning-input>
+       <div if:true={showInterest}>
+       Simple Interest is : {interest}
+    </div>
+
+
+
+    <lightning-input label="Account Name" value ={accountObj.Name} onchange={accountChange} name="name"></lightning-input>
+    <lightning-input label="Account Phone" value ={accountObj.Phone} onchange={accountChange} name="phone"></lightning-input>
+
+    <lightning-input label="Account Rating" value ={accountObj.Rating} onchange={accountChange} name="Rating"></lightning-input>
+
+
+
+
+
+
+       <div class="footer">
+        <lightning-button-group>
+            <lightning-button label="Save Account" onclick={saveAccount}></lightning-button>
+
+            <lightning-button label="New Cmp" onclick={navigateToLightningComponent}></lightning-button>
+
+       <lightning-button variant="brand" label="Calculate SI" onclick={calculateSi}></lightning-button>
+       <lightning-button variant="brand" label="Show Contact" onclick={showContact}></lightning-button>
+    </lightning-button-group>
+        </div>
+
+    </br>
+</br>
+</br>
+<template if:true={contactDetails}>
+
+        <table class="slds-table slds-table_bordered slds-table_fixed-layout">
+            <thead>
+                <tr>
+                    <th>Contact Name</th>
+                    <th>Contact Email</th>
+                    <th>Contact Phone</th>
+                </tr>
+            </thead>
+            <tbody>
+                <template for:each={contactList} for:item="item" for:index="index">
+                    <tr key={item.id}>
+                        <td>{item.Name}</td>
+                        <td>{item.Email}</td>
+                        <td>{item.Phone}</td>
+                    </tr>
+
+                </template>
+                
+            </tbody>
+        </table>
+    </template>
+    </lightning-card>
+
+
+    <template if:true={showChild}>
+        <c-child-cmp inter={passValue}   onprocessvalue={getonProcess}></c-child-cmp>
+    </template>
+</template>
