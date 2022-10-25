@@ -1,0 +1,32 @@
+import cv2
+import numpy as np
+import scipy
+#Read the image
+image = cv2.imread('shop.jpg')
+#greyscale filter
+def greyscale(img):
+    greyscale = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    return greyscale
+    #making the greyscale image
+a1 = greyscale(image)
+filename = 'greyscale.jpg'
+# Using cv2.imwrite() method
+# Saving the image
+cv2.imwrite(filename, a1)
+# brightness adjustment
+def bright(img, beta_value ):
+    img_bright = cv2.convertScaleAbs(img, beta=beta_value)
+    return img_bright
+    #making the  more bright image
+#positive beta value
+a2 = bright(image, 60)
+filename = 'more_bright.jpg'
+# Using cv2.imwrite() method
+# Saving the image
+cv2.imwrite(filename, a2)
+#making the winter img
+a10 = Winter(image)
+filename = 'Winter.jpg'
+# Using cv2.imwrite() method
+# Saving the image
+cv2.imwrite(filename, a10)
